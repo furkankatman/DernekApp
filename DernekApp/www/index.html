@@ -35,27 +35,59 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <!-- Angular Material style sheet -->
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <title>DernekApp</title>
     </head>
     <body ng-controller="MainController" lang="tr"  ng-cloak> 
-        <div class="app">
-           {{Greeting}}
 
-           <div class="CreatePanel">
-            <md-input-container>
-                <label>Dernek İsmi</label>
-                <input ng-model="dernek.Name">
-              </md-input-container>
-              <md-input-container>
-                <label>Dernek Adresi</label>
-                <input ng-model="dernek.Address">
-              </md-input-container>
-              <md-button class="md-raised" ng-click="SaveDernek()">Kaydet</md-button>
-
-           </div>
+            <md-sidenav
+            class="md-sidenav-left"
+            md-component-id="left"
+            md-is-locked-open="$mdMedia('gt-md')"
+            md-whiteframe="4">
+    
+          <md-toolbar class="md-theme-indigo">
+            <h1 class="md-toolbar-tools">Menu</h1>
+          </md-toolbar>
+          <md-content layout-padding>
+            <md-button ng-click="close()" class="md-primary" hide-gt-md>
+              Kapat
+            </md-button>
+            <p hide show-gt-md>
+              This sidenav is locked open on your device. To go back to the default behavior,
+              narrow your display.
+            </p>
+          </md-content>
+    
+        </md-sidenav>
+        <md-toolbar class="md-hue-2">
+                <div class="md-toolbar-tools">
+                  <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleLeft()" >
+                        <i class="fas fa-align-justify"></i>
+                  </md-button>
+          
+                  <h2 flex md-truncate>DernekApp v0.1</h2>
+          
+                  <md-button class="md-icon-button" aria-label="Favorite">
+                        <i class="fas fa-heart"></i>
+                  </md-button>
+          
+                  <md-button class="md-icon-button" aria-label="More">
+                        <i class="fas fa-ellipsis-v"></i>
+                  </md-button>
+                </div>
+              </md-toolbar>
+        <div class="app" layout="column">
+                <md-content> 
+                    
+                  <ui-view></ui-view>
+                </md-content>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.7/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.7.7/angular-locale_tr-tr.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.22/angular-ui-router.min.js"></script>
+        
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-animate.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-aria.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-messages.min.js"></script>
