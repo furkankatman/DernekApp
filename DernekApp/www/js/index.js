@@ -18,28 +18,41 @@
  */
 var app = {
   // Application Constructor
-  initialize: function () {
-    document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+  initialize: function() {
+    document.addEventListener(
+      "deviceready",
+      this.onDeviceReady.bind(this),
+      false
+    );
   },
 
   // deviceready Event Handler
   //
   // Bind any cordova events here. Common events are:
   // 'pause', 'resume', etc.
-  onDeviceReady: function () {
+  onDeviceReady: function() {
+    var app = angular.module("DernekApp", [
+      "ngMaterial",
+      "ngMessages",
+      "ui.router"
+    ]);
 
-    var app = angular.module("DernekApp", ['ngMaterial', 'ngMessages', 'ui.router']);
-
-    app.controller("MainController", function ($scope,$state, $timeout, $mdSidenav, $log) {
-      $scope.toggleLeft = buildDelayedToggler('left');
-      $scope.toggleRight = buildToggler('right');
-      $scope.isOpenRight = function () {
-        return $mdSidenav('right').isOpen();
+    app.controller("MainController", function(
+      $scope,
+      $state,
+      $timeout,
+      $mdSidenav,
+      $log
+    ) {
+      $scope.toggleLeft = buildDelayedToggler("left");
+      $scope.toggleRight = buildToggler("right");
+      $scope.isOpenRight = function() {
+        return $mdSidenav("right").isOpen();
       };
       /**
-* Supplies a function that will continue to operate until the
-* time is up.
-*/
+       * Supplies a function that will continue to operate until the
+       * time is up.
+       */
       function debounce(func, wait, context) {
         var timer;
 
@@ -47,7 +60,7 @@ var app = {
           var context = $scope,
             args = Array.prototype.slice.call(arguments);
           $timeout.cancel(timer);
-          timer = $timeout(function () {
+          timer = $timeout(function() {
             timer = undefined;
             func.apply(context, args);
           }, wait || 10);
@@ -59,118 +72,156 @@ var app = {
        * report completion in console
        */
       function buildDelayedToggler(navID) {
-        return debounce(function () {
+        return debounce(function() {
           // Component lookup should always be available since we are not using `ng-if`
           $mdSidenav(navID)
             .toggle()
-            .then(function () {
+            .then(function() {
               $log.debug("toggle " + navID + " is done");
             });
         }, 200);
       }
 
       function buildToggler(navID) {
-        return function () {
+        return function() {
           // Component lookup should always be available since we are not using `ng-if`
           $mdSidenav(navID)
             .toggle()
-            .then(function () {
+            .then(function() {
               $log.debug("toggle " + navID + " is done");
             });
         };
       }
 
-      $scope.close = function () {
+      $scope.close = function() {
         // Component lookup should always be available since we are not using `ng-if`
-        $mdSidenav('left').close()
-          .then(function () {
+        $mdSidenav("left")
+          .close()
+          .then(function() {
             $log.debug("close LEFT is done");
           });
-
       };
       $scope.Greeting = "Merhaba Sayın Üye :)";
       $scope.dernek = {};
-      $scope.state=$state;
-      $scope.SaveDernek = function () {
+      $scope.state = $state;
+      $scope.SaveDernek = function() {
         alert("Dernek Oluşturuldu");
-      }
-
-
-
-
+      };
     });
 
-    angular.element(document).ready(function () {
-      angular.bootstrap(document, ['DernekApp']);
+    angular.element(document).ready(function() {
+      angular.bootstrap(document, ["DernekApp"]);
     });
 
-    app.config(function ($stateProvider, $urlRouterProvider) {
+    app.config(function($stateProvider, $urlRouterProvider) {
       var homeState = {
-        name: 'home',
-        url: '/home',
-        templateUrl: '../Templates/Home.html',
+        name: "home",
+        url: "/home",
+        templateUrl: "../Templates/Home.html",
         controller: "MainController"
-      }
+      };
 
       var aboutState = {
-        name: 'about',
-        url: '/about',
-        templateUrl: '../Templates/About.html',
-        controller: function ($scope) {
+        name: "about",
+        url: "/about",
+        templateUrl: "../Templates/About.html",
+        controller: function($scope) {
           $scope.Greeting = "Selam About";
         }
-      }
+      };
 
       var misyonState = {
-        name: 'misyon',
-        url: '/misyon',
-        templateUrl: '../Templates/Misyon.html',
-        controller: function ($scope) {
+        name: "misyon",
+        url: "/misyon",
+        templateUrl: "../Templates/Misyon.html",
+        controller: function($scope) {
           $scope.Greeting = "Selam Misyon";
         }
-      }
+      };
       var vizyonState = {
-        name: 'vizyon',
-        url: '/vizyon',
-        templateUrl: '../Templates/Vizyon.html',
-        controller: function ($scope) {
+        name: "vizyon",
+        url: "/vizyon",
+        templateUrl: "../Templates/Vizyon.html",
+        controller: function($scope) {
           $scope.Greeting = "Selam Vizyon";
         }
-      }
+      };
       var tuzukState = {
-        name: 'tuzuk',
-        url: '/tuzuk',
-        templateUrl: '../Templates/Tuzuk.html',
-        controller: function ($scope) {
+        name: "tuzuk",
+        url: "/tuzuk",
+        templateUrl: "../Templates/Tuzuk.html",
+        controller: function($scope) {
           $scope.Greeting = "Selam Tüzük";
         }
-      }
+      };
 
       var signupState = {
-        name: 'signup',
-        url: '/signup',
-        templateUrl: '../Templates/Signup.html',
-        controller: function ($scope) {
+        name: "signup",
+        url: "/signup",
+        templateUrl: "../Templates/Signup.html",
+        controller: function($scope) {
           $scope.Greeting = "Selam Kayıt Ekranı";
-          $scope.user={};
-          $scope.Signup=function(){
-
-            console.log("Kayıt oldunuz.")
-            firebase.auth().createUserWithEmailAndPassword($scope.user.email, $scope.user.password).catch(function(error) {
-              // Handle Errors here.
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              // ...
-            }).then(function(){
-              console.log("Kullanıcı kaydedildi.--->",user.email)
-            });
-
-          }
-
-
-
+          $scope.user = {};
+          $scope.Signup = function() {
+            console.log("Kayıt oldunuz.");
+            firebase
+              .auth()
+              .createUserWithEmailAndPassword(
+                $scope.user.email,
+                $scope.user.password
+              )
+              .catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // ...
+              })
+              .then(function() {
+                console.log("Kullanıcı kaydedildi.--->", user.email);
+              });
+          };
         }
-      }
+      };
+
+      var eventsState = {
+        name: "events",
+        url: "/events",
+        templateUrl: "../Templates/Events.html",
+        controller: function($scope) {
+          $scope.Greeting = "Hello Events Page";
+        }
+      };
+      var eventCreateState = {
+        name: "eventCreate",
+        url: "/eventCreate",
+        templateUrl: "../Templates/eventCreate.html",
+        controller: function($scope) {
+          $scope.Greeting = "Hello eventCreate Page";
+
+          $scope.event = {};
+
+          $scope.CreateEvent = function() {
+            var eventToAdd = angular.copy($scope.event);
+            eventToAdd.EventDate = eventToAdd.EventDate.getTime() / 1000;
+            console.log("Etkinşiğiniz oluşturulmuştur.--->", eventToAdd);
+            const key = firebase
+              .database()
+              .ref("Events")
+              .push().key;
+
+            firebase
+              .database()
+              .ref("Events")
+              .child(key)
+              .set(eventToAdd)
+              .then(() => {
+                console.log("Event Kaydedildi.");
+                $scope.event = {};
+                $scope.$apply(); //ui 'ı güncelle
+              });
+          };
+        }
+      };
 
       $stateProvider.state(homeState);
       $stateProvider.state(aboutState);
@@ -178,11 +229,11 @@ var app = {
       $stateProvider.state(misyonState);
       $stateProvider.state(tuzukState);
       $stateProvider.state(signupState);
+      $stateProvider.state(eventsState);
+      $stateProvider.state(eventCreateState);
 
-      $urlRouterProvider.otherwise('/home');
+      $urlRouterProvider.otherwise("/home");
     });
-
-
   }
 };
 

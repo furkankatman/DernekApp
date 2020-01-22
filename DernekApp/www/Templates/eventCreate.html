@@ -1,0 +1,39 @@
+<md-content>
+  <md-card>
+    <h2>Lets Create an Event:</h2>
+    <md-card layout-padding>
+      <div layout="column">
+        <md-datepicker
+          ng-model="event.EventDate"
+          md-placeholder="Pick a Date"
+        ></md-datepicker>
+        <md-input-container>
+          <label>Title</label>
+          <input ng-model="event.Title" />
+        </md-input-container>
+        <md-input-container>
+          <label>Description</label>
+          <textarea
+            ng-model="event.Description"
+            md-maxlength="300"
+            rows="3"
+            md-select-on-focus
+          ></textarea>
+        </md-input-container>
+
+        <md-input-container>
+          <label>Address</label>
+          <textarea
+            ng-model="event.Address"
+            md-maxlength="300"
+            rows="3"
+            md-select-on-focus
+          ></textarea>
+        </md-input-container>
+        <md-button class="md-raised" ng-click="CreateEvent()">
+          Create Event
+        </md-button>
+      </div>
+    </md-card>
+  </md-card>
+</md-content>
