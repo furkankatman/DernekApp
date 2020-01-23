@@ -1,5 +1,20 @@
 <md-content>
   <md-card>
-    <h1>{{Greeting}}</h1>
+    <h1 md-colors="{background:'green-900'}">{{Greeting}}</h1>
+
+    <md-card ng-repeat="event in Events" class="Events">
+      <h2> {{event.Title}}</h2>
+      <p>{{event.Description}}</p>
+      <p>{{event.Location}}</p>
+      <p>{{event.EventDate}}</p>
+      <div layout="row" layout-align="space-between start">
+        <md-button ng-click="SetAttendeeType(1,event.Title)" md-colors="{background:'green-700'}">Geliyorum</md-button>
+        <md-button ng-click="SetAttendeeType(0,event.Title)" md-colors="{background:'red-700'}">Gelemiyorum</md-button>
+        <md-button ng-click="SetAttendeeType(2,event.Title)" md-colors="{background:'purple-700'}">Gecikeceğim
+        </md-button>
+      </div>
+    </md-card>
+
+
   </md-card>
 </md-content>

@@ -70,8 +70,9 @@ h1 {
   font-weight: normal;
   margin: 0px;
   overflow: visible;
-  padding: 0px;
   text-align: center;
+  border-radius: 6px;
+  padding: 2px;
 }
 
 .event {
@@ -137,4 +138,12 @@ h2 {
 
 .md-datepicker-input-container {
   width: 140px;
+}
+
+.Events{
+  padding: 4px;
+}
+
+.Events .md-button{
+  border-radius: 6px;
 }

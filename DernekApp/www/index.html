@@ -18,8 +18,9 @@
     under the License.
 -->
 <html>
-  <head>
-    <!--
+
+<head>
+  <!--
         Customize this policy to fit your own app's needs. For more guidance, see:
             https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
         Some notes:
@@ -28,169 +29,121 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
-    <meta charset="UTF-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta
-      name="viewport"
-      content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"
-    />
-    <!-- Angular Material style sheet -->
-    <link
-      rel="stylesheet"
-      href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <title>DernekApp</title>
-  </head>
+  <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
+  <meta charset="UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="viewport"
+    content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet"
+    href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="css/index.css" />
+  <title>DernekApp</title>
+</head>
 
-  <body ng-controller="MainController" lang="tr" ng-cloak>
-    <md-sidenav
-      class="md-sidenav-left"
-      md-component-id="left"
-      md-is-locked-open="$mdMedia('gt-md')"
-      md-whiteframe="4"
-    >
-      <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">Menu</h1>
-      </md-toolbar>
-      <md-content layout="column" layout-padding>
-        <md-button
-          ng-click="state.go('home');close()"
-          md-colors="{background: 'grey-900'}"
-          class="md-primary"
-          hide-gt-md
-        >
-          Anasayfa
-        </md-button>
-        <md-button
-          ng-click="state.go('misyon');close()"
-          md-colors="{background: 'grey-900'}"
-          class="md-primary"
-          hide-gt-md
-        >
-          Misyon
-        </md-button>
-        <md-button
-          ng-click="state.go('vizyon');close()"
-          md-colors="{background: 'grey-900'}"
-          class="md-primary"
-          hide-gt-md
-        >
-          Vizyon
-        </md-button>
-        <md-button
-          ng-click="state.go('tuzuk');close()"
-          md-colors="{background: 'grey-900'}"
-          class="md-primary"
-          hide-gt-md
-        >
-          Tüzük
-        </md-button>
-        <md-button
-          ng-click="state.go('events');close()"
-          md-colors="{background: 'green-900'}"
-          class="md-primary"
-          hide-gt-md
-        >
-          Etkinlikler
-        </md-button>
-
-        <md-button
-          ng-click="state.go('eventCreate');close()"
-          md-colors="{background: 'green-900'}"
-          class="md-primary"
-          hide-gt-md
-        >
-          Etkinlik Oluştur
-        </md-button>
-        <md-button
-          ng-click="state.go('signup');close()"
-          md-colors="{background: 'green-900'}"
-          class="md-primary"
-          hide-gt-md
-        >
-          Kaydol
-        </md-button>
-        <md-button
-          ng-click="close()"
-          md-colors="{background: 'purple-900'}"
-          class="md-primary"
-          hide-gt-md
-        >
-          Kapat
-        </md-button>
-      </md-content>
-    </md-sidenav>
-    <md-toolbar class="md-hue-2">
-      <div class="md-toolbar-tools">
-        <md-button
-          class="md-icon-button"
-          aria-label="Settings"
-          ng-click="toggleLeft()"
-        >
-          <i class="fas fa-align-justify"></i>
-        </md-button>
-
-        <h2 flex md-truncate>DernekApp v0.1</h2>
-
-        <md-button class="md-icon-button" aria-label="Favorite">
-          <i class="fas fa-heart"></i>
-        </md-button>
-
-        <md-button class="md-icon-button" aria-label="More">
-          <i class="fas fa-ellipsis-v"></i>
-        </md-button>
-      </div>
+<body ng-controller="MainController" lang="tr" ng-cloak>
+  <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
+    <md-toolbar class="md-theme-indigo">
+      <h1 ng-click="toggleLeft()" class="md-toolbar-tools">Menu</h1>
     </md-toolbar>
-    <div class="app" layout="column">
-      <md-content>
-        <ui-view></ui-view>
-      </md-content>
+    <md-content layout="column" layout-padding>
+      <md-button ng-click="state.go('home');close()" md-colors="{background: 'grey-900'}" class="md-primary" hide-gt-md>
+        Anasayfa
+      </md-button>
+      <md-button ng-click="state.go('misyon');close()" md-colors="{background: 'grey-900'}" class="md-primary"
+        hide-gt-md>
+        Misyon
+      </md-button>
+      <md-button ng-click="state.go('vizyon');close()" md-colors="{background: 'grey-900'}" class="md-primary"
+        hide-gt-md>
+        Vizyon
+      </md-button>
+      <md-button ng-click="state.go('tuzuk');close()" md-colors="{background: 'grey-900'}" class="md-primary"
+        hide-gt-md>
+        Tüzük
+      </md-button>
+      <md-button ng-click="state.go('events');close()" md-colors="{background: 'green-900'}" class="md-primary"
+        hide-gt-md>
+        Etkinlikler
+      </md-button>
+
+      <md-button ng-click="state.go('eventCreate');close()" md-colors="{background: 'green-900'}" class="md-primary"
+        hide-gt-md>
+        Etkinlik Oluştur
+      </md-button>
+      <md-button ng-click="state.go('signup');close()" md-colors="{background: 'green-900'}" class="md-primary"
+        hide-gt-md>
+        Kaydol
+      </md-button>
+      <md-button ng-click="close()" md-colors="{background: 'purple-900'}" class="md-primary" hide-gt-md>
+        Kapat
+      </md-button>
+    </md-content>
+  </md-sidenav>
+  <md-toolbar class="md-hue-2">
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleLeft()">
+        <i class="fas fa-align-justify"></i>
+      </md-button>
+
+      <h2 flex md-truncate>DernekApp v0.1</h2>
+
+      <md-button class="md-icon-button" aria-label="Favorite">
+        <i class="fas fa-heart"></i>
+      </md-button>
+
+      <md-button class="md-icon-button" aria-label="More">
+        <i class="fas fa-ellipsis-v"></i>
+      </md-button>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.7/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.7.7/angular-locale_tr-tr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.22/angular-ui-router.min.js"></script>
+  </md-toolbar>
+  <div class="app" layout="column">
+    <md-content>
+      <ui-view></ui-view>
+    </md-content>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.7/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.7.7/angular-locale_tr-tr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.22/angular-ui-router.min.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-aria.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-messages.min.js"></script>
-    <!-- Angular Material Library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-messages.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/tr.js"></script>
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
 
-    <!-- Firebase -->
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+  <!-- Firebase -->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
+  <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
-    <script>
-      // Your web app's Firebase configuration
-      var firebaseConfig = {
-        apiKey: "AIzaSyCR2wF3SaA9aveObvvh758Vixapexw-Ss0",
-        authDomain: "dernekapp-fdda2.firebaseapp.com",
-        databaseURL: "https://dernekapp-fdda2.firebaseio.com",
-        projectId: "dernekapp-fdda2",
-        storageBucket: "dernekapp-fdda2.appspot.com",
-        messagingSenderId: "558931930143",
-        appId: "1:558931930143:web:78bca14ef5781bd92af92a",
-        measurementId: "G-BDX91DXGF2"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      firebase.analytics();
-    </script>
-  </body>
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyCR2wF3SaA9aveObvvh758Vixapexw-Ss0",
+      authDomain: "dernekapp-fdda2.firebaseapp.com",
+      databaseURL: "https://dernekapp-fdda2.firebaseio.com",
+      projectId: "dernekapp-fdda2",
+      storageBucket: "dernekapp-fdda2.appspot.com",
+      messagingSenderId: "558931930143",
+      appId: "1:558931930143:web:78bca14ef5781bd92af92a",
+      measurementId: "G-BDX91DXGF2"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+</body>
+
 </html>

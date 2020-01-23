@@ -18,7 +18,7 @@
  */
 var app = {
   // Application Constructor
-  initialize: function() {
+  initialize: function () {
     document.addEventListener(
       "deviceready",
       this.onDeviceReady.bind(this),
@@ -30,14 +30,14 @@ var app = {
   //
   // Bind any cordova events here. Common events are:
   // 'pause', 'resume', etc.
-  onDeviceReady: function() {
+  onDeviceReady: function () {
     var app = angular.module("DernekApp", [
       "ngMaterial",
       "ngMessages",
       "ui.router"
     ]);
 
-    app.controller("MainController", function(
+    app.controller("MainController", function (
       $scope,
       $state,
       $timeout,
@@ -46,7 +46,7 @@ var app = {
     ) {
       $scope.toggleLeft = buildDelayedToggler("left");
       $scope.toggleRight = buildToggler("right");
-      $scope.isOpenRight = function() {
+      $scope.isOpenRight = function () {
         return $mdSidenav("right").isOpen();
       };
       /**
@@ -60,7 +60,7 @@ var app = {
           var context = $scope,
             args = Array.prototype.slice.call(arguments);
           $timeout.cancel(timer);
-          timer = $timeout(function() {
+          timer = $timeout(function () {
             timer = undefined;
             func.apply(context, args);
           }, wait || 10);
@@ -72,60 +72,63 @@ var app = {
        * report completion in console
        */
       function buildDelayedToggler(navID) {
-        return debounce(function() {
+        return debounce(function () {
           // Component lookup should always be available since we are not using `ng-if`
           $mdSidenav(navID)
             .toggle()
-            .then(function() {
+            .then(function () {
               $log.debug("toggle " + navID + " is done");
             });
         }, 200);
       }
 
       function buildToggler(navID) {
-        return function() {
+        return function () {
           // Component lookup should always be available since we are not using `ng-if`
           $mdSidenav(navID)
             .toggle()
-            .then(function() {
+            .then(function () {
               $log.debug("toggle " + navID + " is done");
             });
         };
       }
 
-      $scope.close = function() {
+      $scope.close = function () {
         // Component lookup should always be available since we are not using `ng-if`
         $mdSidenav("left")
           .close()
-          .then(function() {
+          .then(function () {
             $log.debug("close LEFT is done");
           });
       };
       $scope.Greeting = "Merhaba Sayın Üye :)";
       $scope.dernek = {};
       $scope.state = $state;
-      $scope.SaveDernek = function() {
+      $scope.fib = {};
+      $scope.fib.auth = firebase.auth();
+      $scope.fib.db = firebase.database();
+      $scope.SaveDernek = function () {
         alert("Dernek Oluşturuldu");
       };
     });
 
-    angular.element(document).ready(function() {
+    angular.element(document).ready(function () {
       angular.bootstrap(document, ["DernekApp"]);
     });
 
-    app.config(function($stateProvider, $urlRouterProvider) {
+    app.config(function ($stateProvider, $urlRouterProvider) {
       var homeState = {
         name: "home",
         url: "/home",
-        templateUrl: "../Templates/Home.html",
+        templateUrl: "Templates/Home.html",
         controller: "MainController"
       };
 
       var aboutState = {
         name: "about",
         url: "/about",
-        templateUrl: "../Templates/About.html",
-        controller: function($scope) {
+        templateUrl: "Templates/About.html",
+        controller: function ($scope) {
           $scope.Greeting = "Selam About";
         }
       };
@@ -133,24 +136,24 @@ var app = {
       var misyonState = {
         name: "misyon",
         url: "/misyon",
-        templateUrl: "../Templates/Misyon.html",
-        controller: function($scope) {
+        templateUrl: "Templates/Misyon.html",
+        controller: function ($scope) {
           $scope.Greeting = "Selam Misyon";
         }
       };
       var vizyonState = {
         name: "vizyon",
         url: "/vizyon",
-        templateUrl: "../Templates/Vizyon.html",
-        controller: function($scope) {
+        templateUrl: "Templates/Vizyon.html",
+        controller: function ($scope) {
           $scope.Greeting = "Selam Vizyon";
         }
       };
       var tuzukState = {
         name: "tuzuk",
         url: "/tuzuk",
-        templateUrl: "../Templates/Tuzuk.html",
-        controller: function($scope) {
+        templateUrl: "Templates/Tuzuk.html",
+        controller: function ($scope) {
           $scope.Greeting = "Selam Tüzük";
         }
       };
@@ -158,11 +161,11 @@ var app = {
       var signupState = {
         name: "signup",
         url: "/signup",
-        templateUrl: "../Templates/Signup.html",
-        controller: function($scope) {
+        templateUrl: "Templates/Signup.html",
+        controller: function ($scope) {
           $scope.Greeting = "Selam Kayıt Ekranı";
           $scope.user = {};
-          $scope.Signup = function() {
+          $scope.Signup = function () {
             console.log("Kayıt oldunuz.");
             firebase
               .auth()
@@ -170,13 +173,13 @@ var app = {
                 $scope.user.email,
                 $scope.user.password
               )
-              .catch(function(error) {
+              .catch(function (error) {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 // ...
               })
-              .then(function() {
+              .then(function () {
                 console.log("Kullanıcı kaydedildi.--->", user.email);
               });
           };
@@ -186,23 +189,55 @@ var app = {
       var eventsState = {
         name: "events",
         url: "/events",
-        templateUrl: "../Templates/Events.html",
-        controller: function($scope) {
-          $scope.Greeting = "Hello Events Page";
+        templateUrl: "Templates/Events.html",
+        controller: function ($scope) {
+          $scope.Greeting = "Events Page";
+          $scope.Events = [];
+          $scope.fib.db.ref("Events").once("value").then(function (snapshot) {
+
+            snapshot.forEach(element => {
+              var event = angular.copy(element.val());
+              event.EventDate = moment(event.EventDate).format("DD MMMM dddd YYYY")
+              $scope.Events.push(event)
+            });
+            $scope.$apply();
+          })
+
+          $scope.SetAttendeeType = function (type, title) {
+
+            if (type === 0) {
+              //gelemeyeceğim
+              console.log(" //gelemeyeceğim")
+              const key = $scope.fib.db.ref("EventAttendees").push().key;
+              var Attendee = { Email: $scope.fib.auth.currentUser.email, Uid: $scope.fib.auth.currentUser.uid, Type: type, EventTitle: title }
+              $scope.fib.db.ref("EventAttendees").child(key).set(Attendee);
+            } else if (type === 1) {
+              //geliyorum
+              console.log(" //geliyorum")
+            } else if (type === 2) {
+              //gecikeceğim
+              console.log(" //gecikeceğim")
+            }
+
+          }
+
+
+
+
         }
       };
       var eventCreateState = {
         name: "eventCreate",
         url: "/eventCreate",
-        templateUrl: "../Templates/eventCreate.html",
-        controller: function($scope) {
+        templateUrl: "Templates/eventCreate.html",
+        controller: function ($scope) {
           $scope.Greeting = "Hello eventCreate Page";
 
           $scope.event = {};
 
-          $scope.CreateEvent = function() {
+          $scope.CreateEvent = function () {
             var eventToAdd = angular.copy($scope.event);
-            eventToAdd.EventDate = eventToAdd.EventDate.getTime() / 1000;
+            eventToAdd.EventDate = moment(eventToAdd.EventDate).valueOf();
             console.log("Etkinşiğiniz oluşturulmuştur.--->", eventToAdd);
             const key = firebase
               .database()
