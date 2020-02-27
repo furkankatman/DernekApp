@@ -1,15 +1,31 @@
 <div>
+  <h2>Register</h2>
+  <md-input-container>
+    <label>Email</label>
+    <input ng-model="user.email">
+  </md-input-container>
 
-    <md-input-container>
-        <label>Email</label>
-        <input ng-model="user.email">
-      </md-input-container>
-      
-    <md-input-container>
-        <label>Password</label>
-        <input ng-model="user.password">
-      </md-input-container>
+  <md-input-container>
+    <label>Password</label>
+    <input ng-model="user.password">
+  </md-input-container>
 
-      <md-button ng-click="Signup()" class="md-raised">Signup</md-button>
+  <md-button ng-click="Signup()" class="md-raised">Signup</md-button>
+
+</div>
+
+<div>
+  <h2>Login</h2>
+  <md-input-container>
+    <label>Email</label>
+    <input ng-model="user.email">
+  </md-input-container>
+
+  <md-input-container>
+    <label>Password</label>
+    <input ng-model="user.password">
+  </md-input-container>
+
+  <md-button ng-click="Login()" class="md-raised">Login</md-button>
 
 </div>

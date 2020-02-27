@@ -24,6 +24,9 @@ var app = {
       this.onDeviceReady.bind(this),
       false
     );
+    document.addEventListener("pause", this.onPause.bind(this), false);
+    document.addEventListener("resume", this.onResume.bind(this), false);
+    document.addEventListener("menubutton", this.onMenuKeyDown.bind(this), false);
   },
 
   // deviceready Event Handler
@@ -110,6 +113,53 @@ var app = {
       $scope.SaveDernek = function () {
         alert("Dernek Oluşturuldu");
       };
+
+
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          // User is signed in.
+          var displayName = user.displayName;
+          var email = user.email;
+          var emailVerified = user.emailVerified;
+          var photoURL = user.photoURL;
+          var isAnonymous = user.isAnonymous;
+          var uid = user.uid;
+          var providerData = user.providerData;
+          var newUser = { Email: email, Uid: uid, status: 1 };
+
+          $scope.fib.db.ref("Users").orderByChild("Uid").equalTo(uid).once("value").then(function (snapshot) {
+            if (snapshot.hasChildren() == false) {
+              var key = $scope.fib.db.ref("Users").push().key;
+              localStorage.setItem("userKey", key);
+              $scope.fib.db.ref("Users").child(key).set(newUser);
+            } else {
+              snapshot.forEach(function (val) {
+                localStorage.setItem("userKey", val.key);
+                $scope.fib.db.ref("Users").child(val.key).update({ status: 1 });
+              })
+            }
+          })
+
+          $scope.fib.db.ref("Users").orderByChild("status").on("value", function (snapshot) {
+            $scope.OnlineCount = 0;
+            $scope.OfflineCount = 0;
+            snapshot.forEach(function (val) {
+              if (val.val().status == 1) {
+                $scope.OnlineCount += 1;
+              } else {
+                $scope.OfflineCount += 1;
+              }
+            })
+            $scope.$apply()
+          })
+          // ...
+        } else {
+          // User is signed out.
+          // ...
+        }
+      });
+
+
     });
 
     angular.element(document).ready(function () {
@@ -183,6 +233,15 @@ var app = {
                 console.log("Kullanıcı kaydedildi.--->", user.email);
               });
           };
+
+          $scope.Login = function () {
+            firebase.auth().signInWithEmailAndPassword($scope.user.email, $scope.user.password).catch(function (error) {
+              // Handle Errors here.
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              // ...
+            });
+          }
         }
       };
 
@@ -269,7 +328,17 @@ var app = {
 
       $urlRouterProvider.otherwise("/home");
     });
+  },
+  onPause: function () {
+    firebase.database().ref("Users").child(localStorage.getItem("userKey")).update({ status: 0 });
+  },
+  onResume: function () {
+    firebase.database().ref("Users").child(localStorage.getItem("userKey")).update({ status: 1 });
+  },
+  onMenuKeyDown: function () {
+
   }
+
 };
 
 app.initialize();
